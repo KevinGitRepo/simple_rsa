@@ -45,7 +45,6 @@ void findInitialPrimes (mpz_t p, mpz_t q) {
 
     gmp_randseed_ui(state, r());
 
-    // 
     unsigned long bitLength = 2048;
 
     generateRSAPrime(p, bitLength, state);
@@ -55,21 +54,21 @@ void findInitialPrimes (mpz_t p, mpz_t q) {
     } while (mpz_cmp(p, q) == 0);
 }
 
-void stringToMpz (const std::string& str, mpz_t& result) {
+void stringToMpz (const string& str, mpz_t& result) {
     mpz_import(result, str.length(), 1, sizeof(char), 0, 0, str.data());
 }
 
-std::string mpzToString (mpz_t num) {
+string mpzToString (mpz_t num) {
     size_t count = 0;
     void* buffer = mpz_export(NULL, &count, 1, sizeof(char), 0, 0, num);
     
     if (count == 0) return "";
     
-    std::string str(reinterpret_cast<char*>(buffer), count);
+    string str(reinterpret_cast<char*>(buffer), count);
     free(buffer);
     return str;
 }
 
-void encryptString (const std::string& str, mpz_t& message) {
+void encryptString (const string& str, mpz_t& message) {
     stringToMpz(str, message);
 }
